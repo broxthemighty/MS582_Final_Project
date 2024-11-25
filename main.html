@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decentralized Job Marketplace</title>
+</head>
+<body>
+    <h1>Decentralized Job Marketplace</h1>
+    <button id="connectWallet">Connect Wallet</button>
+    <div id="walletAddress"></div>
+
+    <h2>Post a Job</h2>
+    <form id="postJobForm">
+        <label for="description">Job Description:</label>
+        <input type="text" id="description" required />
+        <label for="budget">Budget (ETH):</label>
+        <input type="number" id="budget" required />
+        <button type="submit">Post Job</button>
+    </form>
+
+    <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
+    <script>
+        let web3;
+        let contract;
+        const contractAddress = "YOUR_CONTRACT_ADDRESS";
+        const abi = [ /* Paste ABI here */ ];
+
+        // Connect Wallet
+        document.getElementById('connectWallet').addEventListener('click', async () => {
+            if (window.ethereum) {
+                web3 = new Web3(window.ethereum);
+                await ethereum.request({ method: 'eth_requestAccounts' });
+                const accounts = await web3.eth.getAccounts();
+                document.getElementById('walletAddress').innerText = `Connected: ${accounts[0]}`;
+                contract = new web3.eth.Contract(abi, contractAddress);
+            } else {
+                alert('MetaMask not detected');
+            }
+        });
+
+        // Post Job
+        document.getElementById('postJobForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const description = document.getElementById('description').value;
+            const budget = web3.utils.toWei(document.getElementById('budget').value, 'ether');
+            const accounts = await web3.eth.getAccounts();
+
+            try {
+                await contract.methods.postJob(budget, description).send({ from: accounts[0] });
+                alert('Job posted successfully!');
+            } catch (error) {
+                console.error(error);
+                alert('Error posting job');
+            }
+        });
+    </script>
+</body>
+</html>
