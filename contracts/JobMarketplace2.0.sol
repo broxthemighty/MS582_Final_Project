@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8;
+pragma solidity ^0.8.18;
 
 /**Created by Matt Lindborg
  * UAT MS582 Week 7
