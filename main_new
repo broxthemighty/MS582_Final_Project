@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Job Marketplace</title>
+</head>
+<body>
+  <h1>Job Marketplace</h1>
+    <button id="connectWallet">Connect Wallet</button>
+    <div id="walletAddress"></div>
+  <h2>Post a Job</h2>
+    <form id="postJobForm">
+        <label>Title: <input type="text" id="title" required></label><br>
+        <label>Description: <input type="text" id="description" required></label><br>
+        <label>Budget (ETH): <input type="number" id="budget" required></label><br>
+        <button type="submit">Post Job</button>
+    </form>
+  <h2>Available Jobs</h2>
+    <div id="jobList">
+        <p>No jobs to display yet.</p>
+    </div>
+  <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
+    <script>
+        let web3;
+        let contract;
+        const contractAddress = "Contract Address"; // Need to add deployed contract address   IMPORTANT!!!!
+        const abi = [/* Your contract ABI */]; // Paste your contract's ABI here
+// Connect MetaMask Wallet
+        document.getElementById("connectWallet").addEventListener("click", async () => {
+            if (window.ethereum) {
+                web3 = new Web3(window.ethereum);
+                try {
+                    await ethereum.request({ method: "eth_requestAccounts" });
+                    const accounts = await web3.eth.getAccounts();
+                    document.getElementById("walletAddress").innerText = `Connected: ${accounts[0]}`;
+                    contract = new web3.eth.Contract(abi, contractAddress);
+                } catch (error) {
+                    alert("Error connecting to wallet.");
+                    console.error(error);
+                }
+            } else {
+                alert("MetaMask not found. Please install it.");
+            }
+        });
+// Post a Job
+        document.getElementById("postJobForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const title = document.getElementById("title").value;
+            const description = document.getElementById("description").value;
+            const budget = web3.utils.toWei(document.getElementById("budget").value, "ether");
+            const accounts = await web3.eth.getAccounts();
+            try {
+                await contract.methods.postJob(budget, title, description).send({ from: accounts[0] });
+                alert("Job posted successfully!");
+                displayStaticJobs(); // Show static jobs for simplicity
+            } 
+            catch (error) {
+                alert("Error posting job.");
+                console.error(error);
+            }
+        });
+// Display Static Job List (for simplicity)
+        function displayStaticJobs() {
+            const jobList = document.getElementById("jobList");
+            jobList.innerHTML = `
+                <div>
+                    <h3>Example Job</h3>
+                    <p>Build a decentralized marketplace</p>
+                    <p>Budget: 2 ETH</p>
+                </div>
+            `;
+        }
+// Auto-display static job list for demo purposes
+        window.addEventListener("load", displayStaticJobs);
+    </script>
+</body>
+</html>
