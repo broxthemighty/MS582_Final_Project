@@ -1,0 +1,109 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "C:\\Users\\black\\source\\repos\\MS582_Final_Project-1\\contracts\\JobMarketplace.sol": {
+      "lastModificationDate": 1734369508593,
+      "contentHash": "d41d8cd98f00b204e9800998ecf8427e",
+      "sourceName": "contracts/JobMarketplace.sol",
+      "solcConfig": {
+        "version": "0.8.28",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [],
+      "artifacts": []
+    },
+    "C:\\Users\\black\\source\\repos\\MS582_Final_Project-1\\contracts\\JobMarketplace2.0.sol": {
+      "lastModificationDate": 1734369569897,
+      "contentHash": "4caa7cb3a716fd420134b17f0b0ed7b2",
+      "sourceName": "contracts/JobMarketplace2.0.sol",
+      "solcConfig": {
+        "version": "0.8.28",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8"
+      ],
+      "artifacts": [
+        "JobMarketplace"
+      ]
+    },
+    "C:\\Users\\black\\source\\repos\\MS582_Final_Project-1\\contracts\\Lock.sol": {
+      "lastModificationDate": 1734372372906,
+      "contentHash": "7eee587c347fe6b1de50c96688cb9477",
+      "sourceName": "contracts/Lock.sol",
+      "solcConfig": {
+        "version": "0.8.28",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.28"
+      ],
+      "artifacts": [
+        "Lock"
+      ]
+    }
+  }
+}

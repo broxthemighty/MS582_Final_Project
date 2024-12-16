@@ -1,0 +1,36 @@
+{
+  "name": "ms582_final_project-1",
+  "version": "1.0.0",
+  "description": "JobMarketplace",
+  "main": "hardhat.config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "npx hardhat test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/broxthemighty/MS582_Final_Project.git"
+  },
+  "keywords": [
+    "solidity",
+    "test"
+  ],
+  "author": "Matt Lindborg",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/broxthemighty/MS582_Final_Project/issues"
+  },
+  "homepage": "https://github.com/broxthemighty/MS582_Final_Project#readme",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "ethers": "^6.13.4",
+    "hardhat": "^2.22.17",
+    "npm-force-resolutions": "^0.0.10",
+    "ws": "8.18.0"
+  },
+  "resolutions": {
+    "ws": "8.18.0"
+  }
+}
