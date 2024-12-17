@@ -81,6 +81,31 @@
 				"type": "event"
 			},
 			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "jobId",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "reason",
+						"type": "string"
+					}
+				],
+				"name": "TransferFailed",
+				"type": "event"
+			},
+			{
 				"inputs": [
 					{
 						"internalType": "uint256",
@@ -237,11 +262,11 @@
 	},
 	"sources": {
 		"contracts/JobMarketplace2.0.sol": {
-			"keccak256": "0xc6660045c36af9ff9b1b2ad1f3a4a325a067ff298288c215e337e09eb087a3de",
+			"keccak256": "0x0c1416e15417b286c3f3eb30f6c2eb44aea7aa1633fded0cdc26c9de7284affa",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://8ad5e8cb9045469baafdeaf7cdb1c8fa03287cf7e6d2a44362602dc64518fbdb",
-				"dweb:/ipfs/QmewsNJBbkHoisc8W79sEXth1CqwiPXUcHMn9NUSsV6sJn"
+				"bzz-raw://35b726d4cf8524e0f2059056ee58b8e0497b1be629aa08b846bf905668c9c0df",
+				"dweb:/ipfs/QmXoJTtQfyGyoScNCEfrFaDpnpMcBexLwsN3497MTnf88m"
 			]
 		}
 	},

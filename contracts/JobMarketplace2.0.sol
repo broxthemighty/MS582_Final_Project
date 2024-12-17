@@ -8,7 +8,7 @@ pragma solidity ^0.8.18;
  * @custom:dev-run-script ./scripts/deploy_with_ethers.ts
  */
 
-contract JobMarketplace {
+contract JobMarketplace { 
 
     // Struct to store job details
     struct Job {
@@ -26,18 +26,19 @@ contract JobMarketplace {
     mapping(uint256 => Job) public jobs; // Mapping of job ID to Job details
 
     // Events
-    event JobPosted(uint256 jobId, address client, uint256 budget, string title, string description);
-    event JobAccepted(uint256 jobId, address freelancer);
-    event FundsReleased(uint256 jobId, address to);
+    event JobPosted(uint256 jobId, address client, uint256 budget, string title, string description); // info on posted job
+    event JobAccepted(uint256 jobId, address freelancer); // notification of a job being accepted
+    event FundsReleased(uint256 jobId, address to); // notification of funds being released after job completion
+    event TransferFailed(uint256 jobId, address to, string reason); // notification of transfer of funds failed
 
     // Post a job
-    function postJob(uint256 budget, string calldata title, string calldata description) external {
+    function postJob(uint256 budget, string calldata title, string calldata description) external { // external type
         require(budget > 0, "Budget must be greater than zero");
         require(bytes(title).length > 0, "Title is required");
 
-        jobCounter++;
+        jobCounter++; // starting at 1 in jobs map
 
-        jobs[jobCounter] = Job(
+        jobs[jobCounter] = Job( // struct used in map
             jobCounter,
             msg.sender,
             address(0),
@@ -51,7 +52,7 @@ contract JobMarketplace {
     }
 
     // Accept a job as a freelancer
-    function acceptJob(uint256 jobId) external {
+    function acceptJob(uint256 jobId) external { // external type
         Job storage job = jobs[jobId];
         require(job.client != address(0), "Job does not exist");
         require(job.freelancer == address(0), "Job already accepted");
@@ -63,22 +64,29 @@ contract JobMarketplace {
     }
 
     // Client deposits funds into escrow
-    function depositFunds(uint256 jobId) external payable {
+    function depositFunds(uint256 jobId) external payable { // external type
         Job storage job = jobs[jobId];
         require(job.client == msg.sender, "Only the client can deposit funds");
         require(msg.value == job.budget, "Incorrect deposit amount");
         require(job.freelancer != address(0), "Job has no freelancer assigned");
     }
 
-    // Release funds to the freelancer
-    function releaseFunds(uint256 jobId) external {
+    // Release funds to the freelancer when job is complete
+    function releaseFunds(uint256 jobId) external { // external type
         Job storage job = jobs[jobId];
         require(msg.sender == job.client, "Only the client can release funds");
         require(!job.isCompleted, "Funds already released");
 
         job.isCompleted = true;
-        payable(job.freelancer).transfer(job.budget);
 
-        emit FundsReleased(jobId, job.freelancer);
+        // Use call to send Ether and can wrap it in try-catch
+        (bool success, ) = payable(job.freelancer).call{value: job.budget}("");
+
+        if (success) {
+            emit FundsReleased(jobId, job.freelancer);
+        } else {
+            job.isCompleted = false; // Revert completion if transfer fails
+            emit TransferFailed(jobId, job.freelancer, "Transfer failed");
+        }
     }
 }
