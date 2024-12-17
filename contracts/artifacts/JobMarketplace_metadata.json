@@ -262,11 +262,11 @@
 	},
 	"sources": {
 		"contracts/JobMarketplace2.0.sol": {
-			"keccak256": "0x0c1416e15417b286c3f3eb30f6c2eb44aea7aa1633fded0cdc26c9de7284affa",
+			"keccak256": "0x256f481b7e47867866fcac79daeb97a20d0f319f298332ad1e8671f3b741388a",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://35b726d4cf8524e0f2059056ee58b8e0497b1be629aa08b846bf905668c9c0df",
-				"dweb:/ipfs/QmXoJTtQfyGyoScNCEfrFaDpnpMcBexLwsN3497MTnf88m"
+				"bzz-raw://806897f14c76ee6043ee1e4d4ca7bec888e11daf4e6d6862b58dd2e799bc6bba",
+				"dweb:/ipfs/QmaFi3sk6hq2TKihXgNhtPCTbxN12U2B9xgzbwSJK2iR4R"
 			]
 		}
 	},

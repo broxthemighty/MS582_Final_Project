@@ -8,6 +8,17 @@ pragma solidity ^0.8.18;
  * @custom:dev-run-script ./scripts/deploy_with_ethers.ts
  */
 
+/*Future Implmementations or improvements:
+    Job Cancellation - cancel a job and return the amount in escrow to the client
+    Escrow Refunds - ties int the Job Cancellation function
+    Freelancer Completion Confirmation - allow the freelancer to mark a job as completed
+    Dispute Resolution System - implement the ability for an arbitrator to decide an outcome from a job disagreement
+    Escrow State Tracking - allow visibilty into the status of the escrow currency
+    Ratings and Reviews of Freelancers - allow a review of the job done for the client
+    Deadline Management - allow a client to set a deadline for the job to be completed
+    Token Based Payments - allow for the use of tokens for payment, instead of currency
+*/
+
 contract JobMarketplace { 
 
     // Struct to store job details
