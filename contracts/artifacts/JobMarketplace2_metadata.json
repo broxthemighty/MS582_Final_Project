@@ -247,7 +247,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"contracts/JobMarketplace2.0.sol": "JobMarketplace"
+			"contracts/JobMarketplace2.0.sol": "JobMarketplace2"
 		},
 		"evmVersion": "cancun",
 		"libraries": {},
@@ -262,11 +262,11 @@
 	},
 	"sources": {
 		"contracts/JobMarketplace2.0.sol": {
-			"keccak256": "0x1349da6481974cc250b4d0e361d85b78f9b63451d215905c18f5dbc1742a0871",
+			"keccak256": "0x20b53ed230ce8f4c71f593f6585969bed1ad291469bf0316e775cbd551fba7b9",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://a55bdf6fd5bbec7f18f77f700daf057b2e036b7192baf0c9c804d836b1de90a4",
-				"dweb:/ipfs/QmPCrCDZtJqBCB7F7juEMWXtXDp5E5PEkqiimd4C9shhoc"
+				"bzz-raw://8edb5471c01079492cd269039053d041b498f9126bb228e4a705762f2a33c89c",
+				"dweb:/ipfs/QmNicwDzYcqZzrKFMLuZXfQdaBTwT7SFFs3Yv5JxbGFSgg"
 			]
 		}
 	},
