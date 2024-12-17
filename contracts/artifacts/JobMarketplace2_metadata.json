@@ -17,6 +17,31 @@
 					{
 						"indexed": false,
 						"internalType": "address",
+						"name": "client",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "FundsDeposited",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "jobId",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
 						"name": "to",
 						"type": "address"
 					}
@@ -175,6 +200,11 @@
 						"type": "uint256"
 					},
 					{
+						"internalType": "uint256",
+						"name": "amountDeposited",
+						"type": "uint256"
+					},
+					{
 						"internalType": "string",
 						"name": "title",
 						"type": "string"
@@ -262,11 +292,11 @@
 	},
 	"sources": {
 		"contracts/JobMarketplace2.0.sol": {
-			"keccak256": "0x20b53ed230ce8f4c71f593f6585969bed1ad291469bf0316e775cbd551fba7b9",
+			"keccak256": "0x50d1c4c7fbc058855dd791bf18ac1ae498ab1a917c7ed56c8b25e0e71590590a",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://8edb5471c01079492cd269039053d041b498f9126bb228e4a705762f2a33c89c",
-				"dweb:/ipfs/QmNicwDzYcqZzrKFMLuZXfQdaBTwT7SFFs3Yv5JxbGFSgg"
+				"bzz-raw://05b4a0e94688f058f6e0ad82e398592f26f4b20743a5de6835613acfc274cb2f",
+				"dweb:/ipfs/QmP4mJXF3HRgEGojSUC4ZZir7ejso33Hg5UQ5Jc5MMjwo7"
 			]
 		}
 	},
