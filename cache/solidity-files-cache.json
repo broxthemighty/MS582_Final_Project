@@ -1,41 +1,9 @@
 {
   "_format": "hh-sol-cache-2",
   "files": {
-    "C:\\Users\\black\\source\\repos\\MS582_Final_Project-1\\contracts\\JobMarketplace.sol": {
-      "lastModificationDate": 1734369508593,
-      "contentHash": "d41d8cd98f00b204e9800998ecf8427e",
-      "sourceName": "contracts/JobMarketplace.sol",
-      "solcConfig": {
-        "version": "0.8.28",
-        "settings": {
-          "evmVersion": "paris",
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [],
-      "artifacts": []
-    },
     "C:\\Users\\black\\source\\repos\\MS582_Final_Project-1\\contracts\\JobMarketplace2.0.sol": {
-      "lastModificationDate": 1734369569897,
-      "contentHash": "4caa7cb3a716fd420134b17f0b0ed7b2",
+      "lastModificationDate": 1734388229396,
+      "contentHash": "e04dde973f278fac06c298b00da613ac",
       "sourceName": "contracts/JobMarketplace2.0.sol",
       "solcConfig": {
         "version": "0.8.28",
@@ -63,7 +31,7 @@
       },
       "imports": [],
       "versionPragmas": [
-        "^0.8"
+        "^0.8.18"
       ],
       "artifacts": [
         "JobMarketplace"

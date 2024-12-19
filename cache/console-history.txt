@@ -1,0 +1,14 @@
+npm install --save-dev hardhat @nomicfoundation/hardhat-ethers ethers
+npx hardhat run scripts/interact.js --network localhost
+console.log("Job posted!");
+);
+    "Build a React DApp" // Job description
+    "Frontend Development", // Job title
+    ethers.utils.parseEther("1.0"), // Budget in wei
+await jobMarketplace.postJob(
+// Post a new job
+console.log(`Job counter: ${jobCounter.toString()}`);
+const jobCounter = await jobMarketplace.jobCounter();
+// Check the initial job counter
+const jobMarketplace = await ethers.getContractAt("JobMarketplace", "0xYourDeployedContractAddress");
+// Attach to the deployed contract

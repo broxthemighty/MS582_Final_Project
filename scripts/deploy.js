@@ -7,7 +7,7 @@ async function main() {
     const jobMarketplace = await JobMarketplace.deploy();
 
     // Wait for the deployment to complete
-    await jobMarketplace.deployed();
+    // await jobMarketplace.deployed();
 
     console.log(`JobMarketplace deployed to: ${jobMarketplace.address}`);
 }
