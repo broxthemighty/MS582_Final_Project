@@ -1,5 +1,7 @@
-// Import ethers.js
-import { ethers } from "ethers";
+// Ethers.js is loaded globally from the CDN in index.html
+console.log("Ethers.js loaded:", ethers);
+console.log("Web3Provider:", ethers.providers.Web3Provider);
+console.log("window.ethereum:", window.ethereum);
 
 // Ethers.js setup
 let provider;
@@ -62,10 +64,15 @@ const abi = [
 document.getElementById("connectWallet").addEventListener("click", async () => {
     if (window.ethereum) {
         try {
+            console.log("initial entry");
             provider = new ethers.providers.Web3Provider(window.ethereum);
+            console.log("provider message 1");
             await provider.send("eth_requestAccounts", []);
+            console.log("provider message 2");
             signer = provider.getSigner();
+            console.log("signer message 1");
             const address = await signer.getAddress();
+            console.log("address message 1");
             document.getElementById("walletAddress").innerText = `Connected: ${address}`;
             console.log("Wallet connected:", address);
         } catch (error) {
@@ -97,16 +104,19 @@ document.getElementById("postJobForm").addEventListener("submit", async (e) => {
 });
 
 // Fetch Jobs
-async function fetchJobs() {
+/*async function fetchJobs() {
     const jobList = document.getElementById("jobList");
     jobList.innerHTML = ""; // Clear the current job list
 
     try {
-        const contract = new ethers.Contract(contractAddress, abi, provider);
+        const contract = new ethers.Contract(contractAddress, abi, provider || signer);
+
+        // Call jobCounter to get the total number of jobs
         const totalJobs = await contract.jobCounter();
 
         for (let jobId = 1; jobId <= totalJobs; jobId++) {
             const job = await contract.jobs(jobId);
+
             const budgetInEth = ethers.utils.formatEther(job.budget);
 
             jobList.innerHTML += `
@@ -123,7 +133,8 @@ async function fetchJobs() {
     } catch (error) {
         console.error("Error fetching jobs:", error);
     }
-}
+}*/
+
 
 // Load jobs on page load
-window.addEventListener("load", fetchJobs);
+//window.addEventListener("load", fetchJobs);

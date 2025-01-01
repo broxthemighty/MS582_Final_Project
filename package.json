@@ -6,9 +6,10 @@
   "directories": {
     "test": "test"
   },
-  "scripts": {
+"scripts": {
+    "start": "lite-server",
     "test": "npx hardhat test"
-  },
+},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/broxthemighty/MS582_Final_Project.git"

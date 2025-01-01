@@ -4,8 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simple Job Marketplace</title>
+    <!-- Include ethers.js from a CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/ethers@latest/dist/ethers.umd.min.js"></script>
 </head>
 <body>
+    <h1>Ethers.js Test</h1>
+    <script>
+        console.log("Ethers.js loaded:", ethers);
+        console.log("Web3Provider:", ethers.providers.Web3Provider);
+        console.log("window.ethereum:", window.ethereum);
+    </script>
     <h1>Job Marketplace</h1>
     <button id="connectWallet">Connect Wallet</button>
     <div id="walletAddress"></div>
@@ -20,7 +28,7 @@
     <div id="jobList">
         <p>No jobs to display yet.</p>
     </div>
-    <!-- Use Vite's development server to load JavaScript -->
-    <script type="module" src="/scripts/main.js"></script>
+    <!-- Load JavaScript -->
+    <script src="/scripts/main.js"></script>
 </body>
 </html>
