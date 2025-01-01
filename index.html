@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simple Job Marketplace</title>
-    <script src="https://cdn.jsdelivr.net/npm/@wagmi/core/dist/umd/index.min.js"></script>
+    <!-- Include Ethers.js -->
+    <script src="https://cdn.jsdelivr.net/npm/ethers@latest/dist/ethers.umd.min.js"></script>
 </head>
 <body>
   <h1>Job Marketplace</h1>
@@ -22,18 +23,12 @@
         <p>No jobs to display yet.</p>
     </div>
   <script>
-        // Viem imports (loaded from the UMD bundle above)
-        const { ethersProvider, createPublicClient, createWalletClient, http, sendTransaction, utils } = wagmi;
-
-        // Define the RPC URL for the Ethereum network (replace with your preferred network or RPC provider)
-        const rpcUrl = "https://mainnet.infura.io/v3/YOUR_INFURA_PROJECT_ID"; // Replace with your RPC provider
-
-        // Initialize Viem clients
-        const publicClient = createPublicClient(http(rpcUrl));
-        let walletClient;
+        // Initialize Ethers.js
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        let signer;
 
         // Contract ABI and Address
-        const contractAddress = "0xBd5255841E45B97E8Ec638F768ED9753845D70F2"; // Replace with your deployed contract address
+        const contractAddress = "0xBd5255841E45B97E8Ec638F768ED9753845D70F2"; // Replace with your contract address
         const abi = [
             {
                 "inputs": [{ "internalType": "uint256", "name": "jobId", "type": "uint256" }],
@@ -50,46 +45,6 @@
                 "type": "function"
             },
             {
-                "anonymous": false,
-                "inputs": [
-                    { "indexed": false, "internalType": "uint256", "name": "jobId", "type": "uint256" },
-                    { "indexed": false, "internalType": "address", "name": "client", "type": "address" },
-                    { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }
-                ],
-                "name": "FundsDeposited",
-                "type": "event"
-            },
-            {
-                "anonymous": false,
-                "inputs": [
-                    { "indexed": false, "internalType": "uint256", "name": "jobId", "type": "uint256" },
-                    { "indexed": false, "internalType": "address", "name": "to", "type": "address" }
-                ],
-                "name": "FundsReleased",
-                "type": "event"
-            },
-            {
-                "anonymous": false,
-                "inputs": [
-                    { "indexed": false, "internalType": "uint256", "name": "jobId", "type": "uint256" },
-                    { "indexed": false, "internalType": "address", "name": "freelancer", "type": "address" }
-                ],
-                "name": "JobAccepted",
-                "type": "event"
-            },
-            {
-                "anonymous": false,
-                "inputs": [
-                    { "indexed": false, "internalType": "uint256", "name": "jobId", "type": "uint256" },
-                    { "indexed": false, "internalType": "address", "name": "client", "type": "address" },
-                    { "indexed": false, "internalType": "uint256", "name": "budget", "type": "uint256" },
-                    { "indexed": false, "internalType": "string", "name": "title", "type": "string" },
-                    { "indexed": false, "internalType": "string", "name": "description", "type": "string" }
-                ],
-                "name": "JobPosted",
-                "type": "event"
-            },
-            {
                 "inputs": [
                     { "internalType": "uint256", "name": "budget", "type": "uint256" },
                     { "internalType": "string", "name": "title", "type": "string" },
@@ -99,23 +54,6 @@
                 "outputs": [],
                 "stateMutability": "nonpayable",
                 "type": "function"
-            },
-            {
-                "inputs": [{ "internalType": "uint256", "name": "jobId", "type": "uint256" }],
-                "name": "releaseFunds",
-                "outputs": [],
-                "stateMutability": "nonpayable",
-                "type": "function"
-            },
-            {
-                "anonymous": false,
-                "inputs": [
-                    { "indexed": false, "internalType": "uint256", "name": "jobId", "type": "uint256" },
-                    { "indexed": false, "internalType": "address", "name": "to", "type": "address" },
-                    { "indexed": false, "internalType": "string", "name": "reason", "type": "string" }
-                ],
-                "name": "TransferFailed",
-                "type": "event"
             },
             {
                 "inputs": [],
@@ -146,9 +84,12 @@
         document.getElementById("connectWallet").addEventListener("click", async () => {
             if (window.ethereum) {
                 try {
-                    const accounts = await ethereum.request({ method: "eth_requestAccounts" });
-                    document.getElementById("walletAddress").innerText = `Connected: ${accounts[0]}`;
-                    walletClient = createWalletClient({ provider: ethereum });
+                    // Request wallet connection
+                    await provider.send("eth_requestAccounts", []);
+                    signer = provider.getSigner();
+                    const address = await signer.getAddress();
+                    document.getElementById("walletAddress").innerText = `Connected: ${address}`;
+                    console.log("Wallet connected:", address);
                 } catch (error) {
                     alert("Error connecting to wallet.");
                     console.error(error);
@@ -163,40 +104,52 @@
             e.preventDefault();
             const title = document.getElementById("title").value;
             const description = document.getElementById("description").value;
-            const budget = utils.parseEther(document.getElementById("budget").value);
+            const budget = ethers.utils.parseEther(document.getElementById("budget").value);
 
             try {
-                const accounts = await ethereum.request({ method: "eth_accounts" });
-                const data = utils.encodeFunctionCall(abi.find(item => item.name === "postJob"), [budget, title, description]);
-
-                await sendTransaction({
-                    from: accounts[0],
-                    to: contractAddress,
-                    data,
-                });
-
+                const contract = new ethers.Contract(contractAddress, abi, signer);
+                const tx = await contract.postJob(budget, title, description);
+                await tx.wait(); // Wait for the transaction to be mined
                 alert("Job posted successfully!");
-                displayStaticJobs(); // Show static jobs for simplicity
+                fetchJobs(); // Refresh job list
             } catch (error) {
                 alert("Error posting job.");
                 console.error(error);
             }
         });
 
-        // Display Static Job List (for simplicity)
-        function displayStaticJobs() {
+        // Fetch Jobs
+        async function fetchJobs() {
             const jobList = document.getElementById("jobList");
-            jobList.innerHTML = `
-                <div>
-                    <h3>Example Job</h3>
-                    <p>Build a decentralized marketplace</p>
-                    <p>Budget: 2 ETH</p>
-                </div>
-            `;
+            jobList.innerHTML = ""; // Clear the current job list
+
+            try {
+                const contract = new ethers.Contract(contractAddress, abi, provider);
+                const totalJobs = await contract.jobCounter();
+
+                for (let jobId = 1; jobId <= totalJobs; jobId++) {
+                    const job = await contract.jobs(jobId);
+
+                    const budgetInEth = ethers.utils.formatEther(job.budget);
+
+                    jobList.innerHTML += `
+                        <div>
+                            <h3>${job.title}</h3>
+                            <p>${job.description}</p>
+                            <p>Budget: ${budgetInEth} ETH</p>
+                            <p>Client: ${job.client}</p>
+                            <p>Freelancer: ${job.freelancer === "0x0000000000000000000000000000000000000000" ? "Unassigned" : job.freelancer}</p>
+                        </div>
+                        <hr />
+                    `;
+                }
+            } catch (error) {
+                console.error("Error fetching jobs:", error);
+            }
         }
 
-        // Auto-display static job list for demo purposes
-        window.addEventListener("load", displayStaticJobs);
+        // Load jobs on page load
+        window.addEventListener("load", fetchJobs);
     </script>
 </body>
 </html>
