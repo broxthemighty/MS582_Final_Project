@@ -29,6 +29,7 @@
     "ethers": "^6.13.4",
     "hardhat": "^2.22.17",
     "npm-force-resolutions": "^0.0.10",
+    "vite": "^6.0.6",
     "ws": "8.18.0"
   },
   "resolutions": {
