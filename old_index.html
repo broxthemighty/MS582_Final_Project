@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simple Job Marketplace</title>
-    <script src="https://cdn.jsdelivr.net/npm/@wagmi/core/dist/umd/index.min.js"></script>
 </head>
 <body>
   <h1>Job Marketplace</h1>
@@ -21,19 +20,12 @@
     <div id="jobList">
         <p>No jobs to display yet.</p>
     </div>
+  <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
   <script>
-        // Viem imports (loaded from the UMD bundle above)
-        const { ethersProvider, createPublicClient, createWalletClient, http, sendTransaction, utils } = wagmi;
+        let web3;
+        let contract;
 
-        // Define the RPC URL for the Ethereum network (replace with your preferred network or RPC provider)
-        const rpcUrl = "https://mainnet.infura.io/v3/YOUR_INFURA_PROJECT_ID"; // Replace with your RPC provider
-
-        // Initialize Viem clients
-        const publicClient = createPublicClient(http(rpcUrl));
-        let walletClient;
-
-        // Contract ABI and Address
-        const contractAddress = "0x8ba69B9E7884cE0A920cC75a7888242014eE4DE9"; // Replace with your deployed contract address
+        const contractAddress = "0x8ba69B9E7884cE0A920cC75a7888242014eE4DE9"; // Replace with your deployed contract address IMPORTANT!!!!!
         const abi = [
             {
                 "inputs": [
@@ -84,13 +76,15 @@
             }
         ];
 
-        // Connect Wallet
+        // Connect MetaMask Wallet
         document.getElementById("connectWallet").addEventListener("click", async () => {
             if (window.ethereum) {
+                web3 = new Web3(window.ethereum);
                 try {
-                    const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+                    await ethereum.request({ method: "eth_requestAccounts" });
+                    const accounts = await web3.eth.getAccounts();
                     document.getElementById("walletAddress").innerText = `Connected: ${accounts[0]}`;
-                    walletClient = createWalletClient({ provider: ethereum });
+                    contract = new web3.eth.Contract(abi, contractAddress);
                 } catch (error) {
                     alert("Error connecting to wallet.");
                     console.error(error);
@@ -105,21 +99,14 @@
             e.preventDefault();
             const title = document.getElementById("title").value;
             const description = document.getElementById("description").value;
-            const budget = utils.parseEther(document.getElementById("budget").value);
-
+            const budget = web3.utils.toWei(document.getElementById("budget").value, "ether");
+            const accounts = await web3.eth.getAccounts();
             try {
-                const accounts = await ethereum.request({ method: "eth_accounts" });
-                const data = utils.encodeFunctionCall(abi.find(item => item.name === "postJob"), [budget, title, description]);
-
-                await sendTransaction({
-                    from: accounts[0],
-                    to: contractAddress,
-                    data,
-                });
-
+                await contract.methods.postJob(budget, title, description).send({ from: accounts[0] });
                 alert("Job posted successfully!");
                 displayStaticJobs(); // Show static jobs for simplicity
-            } catch (error) {
+            } 
+            catch (error) {
                 alert("Error posting job.");
                 console.error(error);
             }
